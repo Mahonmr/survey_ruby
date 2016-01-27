@@ -69,3 +69,18 @@ delete('/surveys/:survey_id/questions/:id') do
   @question.destroy
   redirect ("/surveys/#{params.fetch('survey_id').to_i}/questions")
 end
+
+get('/questions/:id/answers') do
+  @question = Question.find(params.fetch("id").to_i)
+  erb(:answers)
+end
+
+get('/questions/:id/answers/new') do
+  @question = Question.find(params.fetch("id").to_i)
+  erb(:answer_form)
+end
+
+post('/questions/:question_id/answers') do
+  Answer.create(:question_id => params.fetch("question_id").to_i, :answer => params.fetch("answer"))
+  redirect ("/questions/#{params.fetch('question_id').to_i}/answers")
+end
